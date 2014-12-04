@@ -44,16 +44,4 @@ General 1 then sends out a messenger to tell the second general, that they shoul
 enemy on his way to the second general and vice versa). Again, in the context of distributed system, the unreliability of messenger can directly related back to the unreliability of message transmission in a normal distributed system. In terms of Byzantine failure, this can be illustrated by the messenger being captured by the enemy and turned to spy on the generals i.e. given false information.
 So the second general sends the messenger back in order to acknowledge this. But the first general also has to acknowledge this, resulting in a never ending run for the poor messenger - thus the generals can never agree on when to attack the enemy.
 
-\subsection{Raft}
-As of writing this report, the most recent proposal to solving the consensus problem is Raft \cite{Raft}. Diego Ongaro and John Oustershout argue that most consensus algorithms, such as Paxos \cite{Paxos} suffer from poor understandability and thus are hard to teach and later implement. Raft is is constructed by solving these three fundamental problems:
-\begin{itemize}
-\item \textbf{Leader election}: a new leader must be chosen when an existing leader fails.
-\item \textbf{Log replication}: the leader must accept log entries from clients and replicate them across the cluster, forcing the other logs to agree with its own.\cite{Raft}
-\item \textbf{Safety}: is ensured by the servers state machine safety property \cite{Raft}. This state machine makes sure that no other server can apply a different command at a given log index, that has already been issued.
-\end{itemize}
-So the basis of this solution is the leader election after which the given leader is responsible to replicate commands it receives from a client to the rest of the network. \\
-It should also be noted that, since Raft relies on majority votes, the algorithm can only uphold these properties in a network of $3F \leq N$, where $F$ is the amount of failures and $N$ is the amount of processes in the system.
-\\ \\
-Looking back at the Two Generals Problem, Raft would only be able to solve the problem if a majority vote would be possible, which it is not. So in order to solve this problem when utilising Raft, one must add another general - such that there is now three generals instead of two. We should also modify the problem, such that the messenger always tells the truth (i.e. cannot suffer from Byzantine failure). So now that we have three generals and an uncapturable messenger, they will reach consensus by finding a leader after which he decides when to launch the attack.
-
 % section introduction (end)
