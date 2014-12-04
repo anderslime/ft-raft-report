@@ -1,0 +1,18 @@
+# Preface 👍
+# Introduction 👍
+# Raft - Joachim
+# Requirements 👍
+# Analysis 👍
+# Leader Election
+  - Theory: Joachim
+  - Design and Implementation: Anders
+# Log Replication
+  - Theory: Anders
+  - Design and Implementation: Anders
+# Evaluation and Testing
+  - At lave nogle af acceptance testene: Anders
+  - 👍
+# Discussion
+  - Joachim, Anders
+# Conclusion
+  - At last
