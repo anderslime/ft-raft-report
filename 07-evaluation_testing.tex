@@ -1,6 +1,6 @@
 \section{Evaluation and Testing} % (fold)
 \label{sec:evaluation_and_testing}
-Testing our implementation will consist of both doing black- and white box tests. As mentioned in the analysis, these tests should should illustrate how close our implementation is to the behaviour of the specification as described in specification in the Raft\cite{Raft} paper.
+As mentioned in the analysis section\ref{sec:analysis} we are to evaluate our solution with white- and black box tests. Their description will thus be provided followed by the results.
 
 %Skriv videre om...
 
@@ -30,23 +30,33 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item Server $S$ times out and start a new election.
         \end{enumerate}
     \end{enumerate}
-\item Log Replication:
+\item \textbf{Log Replication}:
     \begin{enumerate}
     \item Log entry is replicated through the system.
         \begin{enumerate}
         \item The user starts the program.
         \item A server $L$ is elected as leader.
-        \item 
+        \item The user requests that a value $x$ is replicated.
+        \item $L$ replicates $x$ such that every log contains $x$ in their log at the correct term and index.
         \end{enumerate}
     \item Awoken follower get its log updated.
+        \begin{enumerate}
+        \item The user starts the program.
+        \item A server $L$ is elected as leader.
+        \item The user requests that a value $x$ is replicated.
+        \item The user crashes a server $S$.
+        \item The user requests that a value $y$ is replicated.
+        \item The user wakes up $S$.
+        \item $L$ updates $S$'s log such that it contains $y$ also.
+        \end{enumerate}
     \end{enumerate}
-\item Safety:
+\item \textbf{Safety}:
     \begin{enumerate}
     \item There is at most one leader at any given term.
     \item Leader never overwrites its own log but only appends on to it.
     \item Logs of every servers match each other up to their latest common index in their logs.
-    \item 
-    \item 
+    \item The log of a leader contains all previous log entries of leader of previous terms.
+    \item A server's log must be up to date with the leaders upon uptading it.
     \end{enumerate})
 \end{itemize}
 

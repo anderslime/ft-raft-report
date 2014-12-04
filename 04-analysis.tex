@@ -21,10 +21,12 @@ In order to be able to verify that the implementation satisfies the requirements
 
 In order to achieve robustness the implementation will also be white-box tested on the unit test level in order to test the behaviour of the different objects in situations and cases that are hard to foresee.
 
-\subsection{Our approach}
-\label{sub:our_approach}
+% subsection testing (end)
 
-The approach used for implementing Raft has iterative with relation to the process. The Raft paper includes an informal specification~\cite[page~4]{Raft} with behaviour of the servers described by the state they are in or how to respond to requests. In order to have a more common language between the specification and the tests, the development approach Behaviour Driven Development\footnote{Originally described by Dan North in the blog post http://dannorth.net/introducing-bdd/}~\cite{bddpaper}. The Behaviour Driven approach is iterative and have been used in the report with the following steps:
+\subsection{Development Approach}
+\label{sub:development_approach}
+
+The approach used for implementing Raft has iterative with relation to the process. The Raft paper includes an informal specification~\cite[page~4]{Raft} with behaviour of the servers described by the state they are in or how to respond to requests. In order to have a more common language between the specification and the tests, the development approach Behaviour Driven Development (BDD)\footnote{Originally described by Dan North in the blog post http://dannorth.net/introducing-bdd/}~\cite{bddpaper}. The Behaviour Driven approach is iterative and have been used in the report with the following steps:
 
 \begin{enumerate}
     \item Derive behaviour from the specification and write a failing test of the given behaviour.
@@ -34,25 +36,9 @@ The approach used for implementing Raft has iterative with relation to the proce
 \end{enumerate}
 
 This is close to Test Driven Development, but with focus on writing tests that describes behaviour instead of testing methods as in unit tests.
-One important thing to make this approach work well is to derive the bevaviour that seem most easy to implement first.
+One important aspect to make this approach work well is to derive the behaviour that seem most easy to implement first.
 
+To facilitate writing tests with a BDD-aproach, the node-libraries \href{http://chaijs.com/}{\tt chai} together with \href{http://mochajs.org}{\tt mocha} 
 % subsection our_approach (end)
-
-% Vores approach til udvikling
-    % - Iterativ
-    % - Ud fra opførsel specificeret i "the raft paper" - Behaviour Driven Development
-    % - BDD:
-    %   - Behaviour ->  Faililing Test (specificatation)
-    %   - Implement until tests passes
-    %   - Refactor
-    %   - Repeat
-
-%Hvordan kommer vi fra requirements til en implementation?
-
-%Hvordan har vi tænkt os at implementere? waterfall vs. iterativ
-
-%Hvordan vil vi verificere programmet (scenarie tests)?
-
-% subsection testing (end)
 
 % section analysis (end)
