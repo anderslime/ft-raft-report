@@ -2,20 +2,18 @@
 \label{sec:evaluation_and_testing}
 As mentioned in the analysis section\ref{sec:analysis} we are to evaluate our solution with white- and black box tests. Their description will thus be provided followed by the results.
 
-%Skriv videre om...
-
 \subsection{White box tests}
-The development of our solution was iterate and based on the behaviour of Raft. This included writing a test for each behaviour described in the condensed summary of Raft\cite{Raft}. For each of these tests its required functionality was then implemented in order to pass its repsective test. 
+The development of our solution was to iterate based on the behaviour of Raft. This included writing a test for each behaviour described in the condensed summary of Raft\cite{Raft}. For each of these tests its required functionality was then implemented in order to satisfy it.
 
 %Forklar heraf resulterne af testene, og hvilke dele af koden der hører til hvilken 'behaviour'.
 
 \subsection{Black box test scenarios}
-Verifying that our solution actually is an implementation of Raft requires more cohesive tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflects the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios have the following success criteria:
+Verifying that our solution actually is an implementation of Raft requires more in-depth tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflect the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios are as following with success criteria and a simple use case:
 
 \begin{itemize}
 \item \textbf{Leader Election}:
     \begin{enumerate}
-    \item A leader is upon initiate start up of the system.
+    \item A leader is elected upon initiate start up of the system.
         \begin{enumerate}
         \item The user starts the program.
         \item Server $S$ times out.
@@ -27,7 +25,7 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user starts the program.
         \item A server $L$ is elected as leader.
         \item The user crashes $L$ at run-time.
-        \item Server $S$ times out and start a new election.
+        \item Server $S$ times out and starts a new election.
         \end{enumerate}
     \end{enumerate}
 \item \textbf{Log Replication}:
@@ -37,7 +35,7 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user starts the program.
         \item A server $L$ is elected as leader.
         \item The user requests that a value $x$ is replicated.
-        \item $L$ replicates $x$ such that every log contains $x$ in their log at the correct term and index.
+        \item $L$ replicates $x$ such that each log of each server contains $x$ in their log at the correct term and index.
         \end{enumerate}
     \item Awoken follower get its log updated.
         \begin{enumerate}
@@ -47,20 +45,58 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user crashes a server $S$.
         \item The user requests that a value $y$ is replicated.
         \item The user wakes up $S$.
-        \item $L$ updates $S$'s log such that it contains $y$ also.
+        \item $L$ updates $S$'s log such that it contains $y$ in its log at the correct index and term.
         \end{enumerate}
     \end{enumerate}
 \item \textbf{Safety}:
     \begin{enumerate}
     \item There is at most one leader at any given term.
+        \begin{enumerate}
+        \item The user starts the program in which two servers $S_1$ and $S_2$ have the same election time out.
+        \item A leader $L$, being the only one with an election time out smaller than both $S_1$ and $S_2$'s, get elected.
+        \item The user crashes $L$.
+        \item Both $S_1$ and $S_2$ start their elections.
+        \item Either $S_1$ or $S_2$ is elected as the new leader.
+        \end{enumerate}
     \item Leader never overwrites its own log but only appends on to it.
+        \begin{enumerate}
+        \item The user starts the program.
+        \item A server $L$ is elected as leader.
+        \item The user requests that a value $x$ is replicated.
+        \item The user requests that a value $y$ is replicated.%Er ikke sikker på at det illustrerer det korrekt.
+        \end{enumerate}
     \item Logs of every servers match each other up to their latest common index in their logs.
+        \begin{enumerate}
+        \item 
+        \end{enumerate}
     \item The log of a leader contains all previous log entries of leader of previous terms.
-    \item A server's log must be up to date with the leaders upon uptading it.
-    \end{enumerate})
+        \begin{enumerate}
+        \item The user starts the program.
+        \item A server $L$ is elected as leader.
+        \item The user crashes a server $S$.
+        \item The user requests that a value $x$ is replicated.
+        \item The user crashes $L$
+        \item The user 
+        \end{enumerate}
+    \item A server's log must be up to date with the leaders upon updating it.
+    \end{enumerate}
 \end{itemize}
-
-The last scenarios about safety are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %ok?.
+And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as following:
+\begin{itemize}
+\item \textbf{Availability}:
+    \begin{enumerate}
+    \item As long as a majority vote is possible, a leader must always be elected. If not the system should become unavailable.
+        \begin{enumerate}
+        \item The user starts the program with five servers.
+        \item A server $L$ is elected as leader.
+        \item The user crashes $L$ and another server.
+        \item A new leader $L'$ is elected as leader.
+        \item The user crashes $L'$.
+        \item The system becomes unavailable.
+        \end{enumerate}
+    \end{enumerate}
+\end{itemize}
+The last scenarios about safety, availability, and especially timing independence are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %ok?.
 
 %Scenarier
     % - Log replication
