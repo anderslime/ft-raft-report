@@ -1,6 +1,39 @@
 \section{Log Replication} % (fold)
 \label{sec:log_replication}
 
+In this section we will describe how Raft handles log replication, discuss some of the design decisions we have taken within Raft and describe the challenges with the implementation.
+
+\subsection{Log Replication in Raft} % (fold)
+\label{sub:log_replication_in_raft}
+
+The general purpose of the log replication feature in a consens algorithm and in Raft is to keep a log history of commands applied in order to compare integrity between servers.
+
+% - To be write client command to log and be able to apply the command to a state machine.
+%   - How a client request is done:
+%     1. Client sends request to the leader with command request
+%     2. Leader appends command to own log
+%     3. Leader replicates log to followers in parallel
+%     4. When the log entry is commited to a majority of the servers, the server will respond the client positively and apply the log entry to the state machine.
+%   - ^ Tegn figur
+%   - Describe AppendEntriesRPC
+%   - Committing index:
+%     - Something about the heartbeat with information.
+%     - When Leader have commited the log entry, the followers will be told as well so they are able to commit it and respond with information about the last commited index.
+%   - What Raft does to handle follower or server failures (log inconsistency):
+%     - Scenarios:
+%       - a follower is missing entries
+%       - may have extra commited/appended entries
+%       - both
+%     - Leader forces follower to duplicate the leaders log
+%     - Missing entries:
+%       - Find common index commited and replicate missing entries from Leader
+%     - Extra commited/appended entries-> Done by:
+%       - finding the last common committed entry with same term and index
+%       - Follower deletes all log entries above the given index
+%       - Replicates as with missing entries
+
+% subsection log_replication_in_raft (end)
+
 % - Theory
 % - Analysis
 %   - Maybe discuss the open ends in Raft
