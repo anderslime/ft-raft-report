@@ -10,17 +10,34 @@ The development of our solution was iterate and based on the behaviour of Raft. 
 %Forklar heraf resulterne af testene, og hvilke dele af koden der hører til hvilken 'behaviour'.
 
 \subsection{Black box test scenarios}
-Verifying that our solution actually is an implementation of Raft requires more cohesive tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflects the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios have the following success criterias:
+Verifying that our solution actually is an implementation of Raft requires more cohesive tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflects the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios have the following success criteria:
 
 \begin{itemize}
-\item Leader:
+\item \textbf{Leader Election}:
     \begin{enumerate}
     \item A leader is upon initiate start up of the system.
+        \begin{enumerate}
+        \item The user starts the program.
+        \item Server $S$ times out.
+        \item $S$ converts to candidate.
+        \item $S$ receives a majority vote and converts to leader.
+        \end{enumerate}
     \item A new leader must be elected if the current leader fails.
+        \begin{enumerate}
+        \item The user starts the program.
+        \item A server $L$ is elected as leader.
+        \item The user crashes $L$ at run-time.
+        \item Server $S$ times out and start a new election.
+        \end{enumerate}
     \end{enumerate}
 \item Log Replication:
     \begin{enumerate}
     \item Log entry is replicated through the system.
+        \begin{enumerate}
+        \item The user starts the program.
+        \item A server $L$ is elected as leader.
+        \item 
+        \end{enumerate}
     \item Awoken follower get its log updated.
     \end{enumerate}
 \item Safety:
