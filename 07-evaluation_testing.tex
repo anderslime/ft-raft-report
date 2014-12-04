@@ -1,14 +1,24 @@
 \section{Evaluation and Testing} % (fold)
 \label{sec:evaluation_and_testing}
-As mentioned in the analysis section\ref{sec:analysis} we are to evaluate our solution with white- and black box tests. Their description will thus be provided followed by the results.
+As mentioned in the analysis section\ref{sec:analysis} we are to evaluate our solution with white- and black box tests. Their description will thus be provided and followed by the results.
 
 \subsection{White box tests}
 The development of our solution was to iterate based on the behaviour of Raft. This included writing a test for each behaviour described in the condensed summary of Raft\cite{Raft}. For each of these tests its required functionality was then implemented in order to satisfy it.
 
 %Forklar heraf resulterne af testene, og hvilke dele af koden der hører til hvilken 'behaviour'.
 
+\subsubsection{Tests}
+Although the functional tests, constructed during implementation, can be directly read in the code, a small example will be presented for completeness's sake.\\ \\
+The following code snippet shows the test for the AppendEntries RPC attribute that a receiver should reply false if the given RPC call contains a term < currentTerm.
+\lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation]{code_snippets/whitebox-test-example.js}
+
+\subsubsection{Results}
+The results for all of the whitebox tests can be seen in appendix TODO.
+
 \subsection{Black box test scenarios}
 Verifying that our solution actually is an implementation of Raft requires more in-depth tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflect the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios are as following with success criteria and a simple use case:
+
+\subsubsection{Tests}
 
 \begin{itemize}
 \item \textbf{Leader Election}:
@@ -67,18 +77,22 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \end{enumerate}
     \item Logs of every servers match each other up to their latest common index in their logs.
         \begin{enumerate}
-        \item 
+        \item TODO
         \end{enumerate}
     \item The log of a leader contains all previous log entries of leader of previous terms.
         \begin{enumerate}
-        \item The user starts the program.
-        \item A server $L$ is elected as leader.
+        \item The user starts the program with a server $L$ with the lowest election time out and $S$ with the second lowest.
+        \item $L$ is elected as leader.
         \item The user crashes a server $S$.
         \item The user requests that a value $x$ is replicated.
+        \item The user wakes up $S$
         \item The user crashes $L$
-        \item The user 
+        \item $S$ has an up to date log.
         \end{enumerate}
     \item A server's log must be up to date with the leaders upon updating it.
+        \begin{enumerate}
+        \item TODO
+        \end{enumerate}
     \end{enumerate}
 \end{itemize}
 And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as following:
@@ -96,14 +110,11 @@ And referring back to requirements in section \ref{sec:requirements}. The soluti
         \end{enumerate}
     \end{enumerate}
 \end{itemize}
-The last scenarios about safety, availability, and especially timing independence are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %ok?.
+The last scenarios about safety, availability, and especially timing independence are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %TODO: ok?.
 
-%Scenarier
-    % - Log replication
-        % - Log entry is replicated throughout the system
-        % - Update log of follwer who wakes up
-    % - New leader election upon leader crash
-    % - No majority vote possible => unavailable system
-    % - 
+\subsubsection{Results}
+The scenarios are implemented and test in the same way as done for the whitebox tests, in which we describe the each scenario with its underlying use case as the real test. Please refer to appendix TODO to see the results of these tests.
+%Hvordan skal de præsenteres/dokumenteres?
+
     
 % section evaluation_and_testing (end)
