@@ -1,5 +1,40 @@
 \section{Evaluation and Testing} % (fold)
 \label{sec:evaluation_and_testing}
+Testing our implementation will consist of both doing black- and white box tests. As mentioned in the analysis, these tests should should illustrate how close our implementation is to the behaviour of the specification as described in specification in the Raft\cite{Raft} paper.
+
+%Skriv videre om...
+
+\subsection{White box tests}
+The development of our solution was iterate and based on the behaviour of Raft. This included writing a test for each behaviour described in the condensed summary of Raft\cite{Raft}. For each of these tests its required functionality was then implemented in order to pass its repsective test. 
+
+%Forklar heraf resulterne af testene, og hvilke dele af koden der hører til hvilken 'behaviour'.
+
+\subsection{Black box test scenarios}
+Verifying that our solution actually is an implementation of Raft requires more cohesive tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflects the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios have the following success criterias:
+
+\begin{itemize}
+\item Leader:
+    \begin{enumerate}
+    \item A leader is upon initiate start up of the system.
+    \item A new leader must be elected if the current leader fails.
+    \end{enumerate}
+\item Log Replication:
+    \begin{enumerate}
+    \item Log entry is replicated through the system.
+    \item Awoken follower get its log updated.
+    \end{enumerate}
+\item Safety:
+    \begin{enumerate}
+    \item There is at most one leader at any given term.
+    \item Leader never overwrites its own log but only appends on to it.
+    \item Logs of every servers match each other up to their latest common index in their logs.
+    \item 
+    \item 
+    \end{enumerate})
+\end{itemize}
+
+The last scenarios about safety are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %ok?.
+
 %Scenarier
     % - Log replication
         % - Log entry is replicated throughout the system
@@ -7,4 +42,5 @@
     % - New leader election upon leader crash
     % - No majority vote possible => unavailable system
     % - 
+    
 % section evaluation_and_testing (end)
