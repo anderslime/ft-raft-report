@@ -1,6 +1,5 @@
 
 \documentclass[paper=a4, fontsize=11pt]{scrartcl}		% KOMA article
-\usepackage{listings}
 \usepackage[a4paper,pdftex]{geometry}										% A4paper margins
 \setlength{\oddsidemargin}{5mm}												% Remove 'twosided' indentation
 \setlength{\evensidemargin}{5mm}
@@ -30,8 +29,6 @@
 \usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{amsmath,amsfonts,amsthm,amssymb}
 \usepackage{graphicx}
-\usepackage{listings}
-\usepackage{listings,multicol}
 \graphicspath{{./figures/}}
 \usepackage{caption}
 \usepackage{multicol}
@@ -57,7 +54,65 @@
 
 % \setlength\parindent{0pt} % Removes all indentation from paragraphs
 
-\lstset{captionpos=b, basicstyle=\footnotesize, breaklines=true}
+%==================================================================================================
+% Source Code
+%==================================================================================================
+\usepackage{listings}
+% \usepackage{xcolor}
+\definecolor{mygray}{gray}{0.3}
+\definecolor{darkgreen}{RGB}{0,127,0}
+\definecolor{darkred}{RGB}{180,0,0}
+\definecolor{mygray2}{gray}{0.9}
+\definecolor{darkgreen}{RGB}{0,127,0}
+\definecolor{darkred}{RGB}{180,0,0}
+\definecolor{mygray2}{gray}{0.9}
+
+% \usepackage[scaled]{beramono} % Bera Mono font
+\lstset{
+  basicstyle=\footnotesize, % Standardschrift
+  %numbers=left,              % Ort der Zeilennummern
+  numberstyle=\tiny,          % Stil der Zeilennummern
+  %stepnumber=2,              % Abstand zwischen den Zeilennummern
+  numbersep=5pt,              % Abstand der Nummern zum Text
+  tabsize=2,                  % Groesse von Tabs
+  extendedchars=false,
+  %texcl=true,
+  %escapechar=\$,
+  breaklines=true,            % Zeilen werden Umgebrochen
+  keywordstyle=\color{blue},
+  frame=b,
+  identifierstyle=\color{darkred},
+  commentstyle=\color{mygreen},%\textit,
+  showspaces=false,           % Leerzeichen anzeigen ?
+  showtabs=false,             % Tabs anzeigen ?
+  xleftmargin=17pt,
+  framexleftmargin=17pt,
+  framexrightmargin=5pt,
+  framexbottommargin=4pt,
+  escapeinside={\%*}{*)},
+  stringstyle=\color{mymauve},
+  %backgroundcolor=\color{lightgray},
+  showstringspaces=false      % Leerzeichen in Strings anzeigen ?
+  %,classoffset=1,
+  %morekeywords={1,2,3,4,5,6,7,8,9,0},
+  %keywordstyle=\color{yellow},
+  %classoffset=0
+}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43, 0.35, 0.35,0.01}{\fontfamily{phv}\selectfont\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{
+  format          = listing,
+  labelfont       = white,
+  textfont        = white,
+  singlelinecheck = false,
+  margin          = 0pt,
+  font            = {bf,footnotesize}
+}
+\usepackage{framed}
+
+\usepackage{caption}
+\captionsetup[lstlisting]{font={small,tt}}
 
 % ------------------------------------------------------------------------------
 % Metadata (Change this)

@@ -12,6 +12,8 @@ Raft have already been implemented in several versions and in many languages. Di
 
 If a Raft implementation was needed for real usage, the solution would have been to extend some of the rich open source implementations already available in solid languages as Go and C. But as mentioned in the introduction, the scope of this project is to learn about Raft with relation to fault-tolerance by implementing it. To be able to cover as much of Raft as possible in the time scope, that language chosen for implementation is JavaScript, because it would allow more productivity.
 
+There already exists solutions in JavaSciript, but since one of the focus of this project is to learn about Raft and the consensus problem, we have chosen to implement a new version with our own approach. Already existsing solutions in JavaScript such as \href{https://github.com/ongardie/raftscope}{raftscope} and \href{https://github.com/pgte/skiff-algorithm}{skiff} have worked as inspirations during implementation.
+
 % subsection existing_raft_implementations (end)
 
 \subsection{Testing} % (fold)
@@ -26,7 +28,7 @@ In order to achieve robustness the implementation will also be white-box tested 
 \subsection{Development Approach}
 \label{sub:development_approach}
 
-The approach used for implementing Raft has iterative with relation to the process. The Raft paper includes an informal specification~\cite[page~4]{Raft} with behaviour of the servers described by the state they are in or how to respond to requests. In order to have a more common language between the specification and the tests, the development approach Behaviour Driven Development (BDD)\footnote{Originally described by Dan North in the blog post http://dannorth.net/introducing-bdd/}~\cite{bddpaper}. The Behaviour Driven approach is iterative and have been used in the report with the following steps:
+Our development approach on implementing Raft has iterative with relation to the process. The Raft paper includes an informal specification~\cite[page~4]{Raft} with behaviour of the servers described by the state they are in or how to respond to requests. In order to have a more common language between the specification and the tests, the development approach Behaviour Driven Development (BDD)\footnote{Originally described by Dan North in the blog post \url{http://dannorth.net/introducing-bdd/}}~\cite{bddpaper}. The Behaviour Driven approach is iterative and have been used in the report with the following steps:
 
 \begin{enumerate}
     \item Derive behaviour from the specification and write a failing test of the given behaviour.
@@ -38,7 +40,11 @@ The approach used for implementing Raft has iterative with relation to the proce
 This is close to Test Driven Development, but with focus on writing tests that describes behaviour instead of testing methods as in unit tests.
 One important aspect to make this approach work well is to derive the behaviour that seem most easy to implement first.
 
-To facilitate writing tests with a BDD-aproach, the node-libraries \href{http://chaijs.com/}{\tt chai} together with \href{http://mochajs.org}{\tt mocha} 
+To facilitate writing tests with a BDD-aproach, we used the node lirbaries \href{http://chaijs.com/}{\tt chai} together with \href{http://mochajs.org}{\tt mocha}, which allows us to write tests written as behaviour such as the example seen in code examplre below.
+
+\lstinputlisting[caption=Example of a JavaScript test with the libraries mocha and chai]{code_snippets/chai_mocha_example.js}
+
+
 % subsection our_approach (end)
 
 % section analysis (end)
