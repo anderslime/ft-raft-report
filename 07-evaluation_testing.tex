@@ -10,7 +10,7 @@ The development of our solution was to iterate based on the behaviour of Raft. T
 \subsubsection{Tests}
 Although the functional tests, constructed during implementation, can be directly read in the code, a small example will be presented for completeness's sake.\\ \\
 The following code snippet shows the test for the AppendEntries RPC attribute that a receiver should reply false if the given RPC call contains a term < currentTerm.
-\lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation]{code_snippets/whitebox-test-example.js}
+\lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation, language=JavaScript]{code_snippets/whitebox-test-example.js}
 
 \subsubsection{Results}
 The results for all of the whitebox tests can be seen in appendix TODO.
