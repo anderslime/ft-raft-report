@@ -43,18 +43,16 @@ The first time a server receives an AppendEntries RPC it will just append it to 
 
 \subsection{Handling Log Inconsistency} % (fold)
 \label{sub:handling_log_inconsistency}
-%   - What Raft does to handle follower or server failures (log inconsistency):
-%     - Scenarios:
-%       - a follower is missing entries
-%       - may have extra commited/appended entries
-%       - both
-%     - Leader forces follower to duplicate the leaders log
-%     - Missing entries:
-%       - Find common index commited and replicate missing entries from Leader
-%     - Extra commited/appended entries-> Done by:
-%       - finding the last common committed entry with same term and index
-%       - Follower deletes all log entries above the given index
-%       - Replicates as with missing entries
+
+The scenario explained this far is the sucessful one, but in distributed systems failures such as network partitions and single server crashes are not rare and should be handled. Raft have behaviour for handling different kind of log inconstencies, which compared to the true log of the leader can be:
+
+\begin{enumerate}
+  \item A follower is missing entries
+  \item A follower has extra entries
+  \item A follower is both missin entries and has extra entries
+\end{enumerate}
+
+All situations of inconcistencies are handled by forcing the followers to duplicate the leaders log. The first situation is handled through the AppendEntries RPC by finding the largest common commited index and replicate the missing entries from the leader. The second scenario is handled by finding the largest common commited index and delete all entries following. Thereafter the situation is as the first and handled so. The last scenario is handled as the second.
 
 % subsection handling_log_inconsistency (end)
 
