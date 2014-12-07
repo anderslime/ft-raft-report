@@ -1,10 +1,10 @@
 # Preface 👍
 # Introduction 👍
-# Raft - Joachim
+# Raft - (thumbs up)
 # Requirements 👍
 # Analysis 👍
 # Leader Election
-  - Theory: Joachim
+  - Theory: (thumbs up)
   - Design and Implementation: Anders
 # Log Replication
   - Theory: Anders
