@@ -6,19 +6,43 @@ In this section we will describe how Raft handles log replication, discuss some 
 \subsection{Log Replication in Raft} % (fold)
 \label{sub:log_replication_in_raft}
 
-The general purpose of the log replication feature in a consens algorithm and in Raft is to keep a log history of commands applied in order to compare integrity between servers.
+The general purpose of the log replication feature in a consens algorithm and in Raft is to keep a log history of commands applied to the state machine in order to compare integrity between servers.
 
-% - To be write client command to log and be able to apply the command to a state machine.
-%   - How a client request is done:
-%     1. Client sends request to the leader with command request
-%     2. Leader appends command to own log
-%     3. Leader replicates log to followers in parallel
-%     4. When the log entry is commited to a majority of the servers, the server will respond the client positively and apply the log entry to the state machine.
-%   - ^ Tegn figur
-%   - Describe AppendEntriesRPC
-%   - Committing index:
-%     - Something about the heartbeat with information.
-%     - When Leader have commited the log entry, the followers will be told as well so they are able to commit it and respond with information about the last commited index.
+Log entries are appended to the log when a client requests a given command to be applied. The flow of receiving the request from the client, commiting the command to the log and responding the client is illustrated in figure~\ref{fig:log_replication_example}. In overall the steps of committing a command in Raft can be written as:
+
+\begin{enumerate}
+  \item Client sends request to the leader with command
+  \item Leader appends command to own log
+  \item Leader replicates log to followers in parallel
+  \item When the command is replicated and commited to a majority of the servers in the cluster, the leader will respond positively to the client and apply the command to the state machine. \label{enum:client_request_final}
+
+\end{enumerate}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{figures/log-replication-example.png}
+  \caption{An illustration of how the leader succesfully apply a command from the client. At first \emph{(a)} the client requests the leader to apply the command x$\rightarrow$5 to the state machine, then \emph{(b)} the applies the command to its own log and \emph{(c)} replicates it to the followers. \emph{(d)} The followers respond positively if the command is applied to their log and the leader commits the entry from the client, when a majority of the servers have appended the log. \emph{(e)} The followers will receive information that the entry is commited and \emph{(f)} when the leader knows that a majority of the servers have applied the command, it will respond to the client positively and append it to the state machine}
+  \label{fig:log_replication_example}
+\end{figure}
+
+% Maybe do not include this headerline
+\subsubsection{AppendEntries RPC/Heartbeat} % (fold)
+\label{ssub:appendentries_rpc_heartbeat}
+
+The log replication mechanism explained in these steps are in Raft the same heartbeat mechanism used for claiming leadership as explained in section~\ref{sec:leader_election}. The hearbeat/log replication request is a Remote Procedure Call (RPC) called \emph{AppendEntries RPC}. The leader invokes the RPC with information for the follower duplicate the leaders log and be in consensus. The follower then responds the leader with success if it is fully replicated or else failure.
+
+% subsubsection appendentries_rpc_heartbeat (end)
+
+% Maybe do not include this headerline
+\subsubsection{Commiting Log Entry} % (fold)
+\label{ssub:commiting_log_entry}
+
+The first time a server receives an AppendEntries RPC it will just append it to the log. A log entry is committed by the leader when the leader knows that a majority of the servers have appended the given log entry to their log. The log entry is then commited on a follower, when the leader sends out information (through \emph{AppendEntries RPC}) that the index of a given log entry is commited. The log entry is safe to apply to the state machine, when a majority of the servers have commited the entry.
+
+% subsubsection commiting_log_entry (end)
+
+\subsection{Handling Log Inconsistency} % (fold)
+\label{sub:handling_log_inconsistency}
 %   - What Raft does to handle follower or server failures (log inconsistency):
 %     - Scenarios:
 %       - a follower is missing entries
@@ -32,14 +56,6 @@ The general purpose of the log replication feature in a consens algorithm and in
 %       - Follower deletes all log entries above the given index
 %       - Replicates as with missing entries
 
-% subsection log_replication_in_raft (end)
-
-% - Theory
-% - Analysis
-%   - Maybe discuss the open ends in Raft
-% - Design
-%   - One log entry per hearbeat or full missing log?
-% - Implementation
-%   - Maybe something about 0 vs. 1 indexing is unclear
+% subsection handling_log_inconsistency (end)
 
 % section log_replication (end)
