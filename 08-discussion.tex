@@ -10,6 +10,10 @@ Implementing Raft required some inspiration from other current implementations i
 \subsection{Further work}
 TODO
 
+% Using random election timeout and trouble with testing.
+One of the problems with using a random election timer is that it is hard to test because of it is not possible to assert a random result. It would be possible to assert a property of the whole system such as ``There is only one leader after x seconds''. But the fact that the test have to be delayed several milliseconds make the tests slow and thereby slows down the development flow.
+
+
 % - Hvordan gik det?
 % - Hvad var svært?
 % - Hvad kunne vi gøre bedre?

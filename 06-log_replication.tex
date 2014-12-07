@@ -59,7 +59,17 @@ All situations of inconcistencies are handled by forcing the followers to duplic
 \subsection{Implementation} % (fold)
 \label{sub:log_replication_implementation}
 
+The log and heartbeat are two implementation specific parts of the Raft algorithm that is not described in implementation details.
 
+Normally the log should be persistent meaning that it should be persisted to disk such that a failure would not result in data loss. But since the implementation in this project is only for visualization, persistency is not implemented. The log is implemented as an object \verb$Log$ that works as an abstraction on top of a simple array containing the entries. For a programmer this abstraction is important since Raft is documented and specified as being a 1-indexed system, where most databases and arrays in various programming languages are 0-indexed.
+
+
+
+% Components
+%   - The Log (store in array, abstracts the 1-indexing in Raft)
+%   - LeaderState (the state the leader keeps about the followers)
+%   - The Heartbeat ()
 
 % subsection implementation (end)
+
 % section log_replication (end)
