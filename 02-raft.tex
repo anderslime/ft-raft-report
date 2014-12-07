@@ -1,6 +1,7 @@
 \section{Raft}
 \label{sec:raft}
-As of writing this report, the most recent proposal to solving the consensus problem is Raft~\cite{Raft}. Diego Ongaro and John Oustershout argue that most consensus algorithms, such as Paxos~\cite{Paxos} suffer from poor understandability and are hard to understand and implement. Diego and John introduce Raft as a simple and understandable solution to the consensus problem.
+As of writing this report, the most recent proposal to solving the consensus problem is Raft~\cite{Raft}. Diego Ongaro and John Oustershout argue that most consensus algorithms, such as Paxos~\cite{Paxos} suffer from poor understandability and are hard to understand and implement. Diego and John introduce Raft as a simple and understandable solution to the consensus problem. 
+The authors of Raft argue that Raft is superior in both the aspects of educational uses but also in performance gained from a less complex implementation. Their main motivation behind Raft is their point of view on the frequently used consensus algorithm Paxos\cite{Paxos}. They describe Paxos as being simple by its foundation but limited, resulting in many variations to solve more complex consensus scenarios. Another arguments they propose, is that Paxos might well work in theory but is hard to integrate in a real system because of its too simple foundation i.e. 'simple decree' decomposition (reaching aggreement on a single decision).
 
 \subsection{Components of Raft}
 Raft is described as having three main components, where the first two describes the behaviour of algorithm and the last describes how the algorithm ensures consensus safety properties.
@@ -18,6 +19,4 @@ Raft is described as having three main components, where the first two describes
       \end{itemize}
 \end{itemize}
 
-% TODO: Maybe rewrite below to fit new chapter
-
-The above description of Raft serves as a rough overview of the algorithm. A more detailed description will be given during the implementation since the paper has implicit or unclear implementation specific components that we have to figure out ourselves. So as we every component is describes our experiences and findings in terms of implementation specific choices will thus be documented.
+The above description of Raft serves as a rough overview of the algorithm. A more detailed description will be given during the implementation since the paper has implicit or unclear implementation specific components that we have to figure out ourselves - which we will also discuss  their view of Paxos into account. And as we describe each component our experiences and findings in terms of implementation specific choices will thus be documented. 
