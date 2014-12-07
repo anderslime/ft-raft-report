@@ -4,7 +4,7 @@ As mentioned in section \ref{sec:raft} one of the two main components of Raft is
 
 Figure~\ref{fig:election_example} illustrates the scenario in which a leader is elected:
 
-In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out and becomes a candidate. If this candidate receives a majority vote it transitions to the leader state after which it has the leader responsibilities described above. The leader maintains the log matching property by continuously sending empty messages i.e. heartbeats in order to update servers with logs that are not up to date.
+In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out and becomes a candidate. If this candidate receives a majority of votes it transitions to the leader state after which it has the leader responsibilities described above. The leader claims its leadership by sending out heartbeats, where if a server receives a heartbeat request from another server it is instantly converted to follower and recognizes the source as leader.
 
 \begin{figure}[ht!]
 \centering
