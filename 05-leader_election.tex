@@ -1,10 +1,13 @@
 \section{Leader Election} % (fold)
 \label{sec:leader_election}
+In this section we will start describing the component of leader election done in Raft. Then describe and discuss the challenges when implementing this.
+
+\subsection{Leader election in Raft}
 As mentioned in section \ref{sec:raft} one of the two main components of Raft is its leader election. The leader election after which the given leader is responsible of replicating commands it receives from a client to the rest of the followers. All servers contain an implementation of Raft, having a log of commands requested by clients. A server can be in three states: leader, candidate or follower.
 
 Figure~\ref{fig:election_example} illustrates the scenario in which a leader is elected:
 
-In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out and becomes a candidate. If this candidate receives a majority of votes it transitions to the leader state after which it has the leader responsibilities described above. The leader claims its leadership by sending out heartbeats, where if a server receives a heartbeat request from another server it is instantly converted to follower and recognizes the source as leader.
+In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out and becomes a candidate. If this candidate receives a majority of votes it transitions to the leader state after which it has the leader responsibilities described described in section \ref{sec:raft}. The leader claims its leadership by sending out heartbeats, where if a server receives a heartbeat request from another server it is instantly converted to follower and recognizes the source as leader.
 
 \begin{figure}[ht!]
 \centering
