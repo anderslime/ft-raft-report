@@ -17,14 +17,24 @@ On top of the tests, a simulator that visualizes the implementation was done in 
 \end{figure}
 
 The simulator lists the servers by their id, state, the amount of entries in its log, its latest commit index, and its time out which decrements. Server 4 is colored red to illustrates that it has crashed.
-The screenshot in figure~\ref{fig:example2} then shows the situation where a server times out and starts an election by requesting votes from the other servers.
+The screenshot in figure~\ref{fig:example2} then shows the situation where a server times out and starts an election by transitioning to the candidate state and requesting votes from the other servers.
 
 \begin{figure}[H]
 \centering
 \includegraphics[scale = 0.5]{screenshot-ongoing-leader-election}
 \caption{Example run of the simulator in the state where a server has started an election.}
-\label{fig:example}
+\label{fig:example2}
 \end{figure}
 
-\subsection{Evaluating of result}
+And lastly the screenshot in figure~\ref{fig:example3} shows the situation in which a crashed server hasn't had its log updated since the leader does not get replies from the heartbeat messages it send to it.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.5]{screenshot-outdated-crashed-server}
+\caption{Example run of the simulator where a leader has been elected and request from a the client has been replicated to all correct servers.}
+\label{fig:example3}
+\end{figure}
+These screenshots of the running simulator serves as results of the acceptance tests.
+Furthermore a video of running the program can be seen in the following link:\\ \url{https://www.dropbox.com/s/75kpa65yykld2mv/simulator_run_video.mov?dl=0}.
+
 The output results of the both the white box and black box test are given in appendix~\ref{sec:results_app}. 
