@@ -37,4 +37,24 @@ And lastly the screenshot in figure~\ref{fig:example3} shows the situation in wh
 These screenshots of the running simulator serves as results of the acceptance tests.
 Furthermore a video of running the program can be seen in the following link:\\ \url{https://www.dropbox.com/s/75kpa65yykld2mv/simulator_run_video.mov?dl=0}.
 
-The output results of the both the white box and black box test are given in appendix~\ref{sec:results_app}. 
+The output results of the both the white box and black box test are given in appendix~\ref{sec:results_app}.
+
+\subsection{Visualization} % (fold)
+\label{sub:visualization}
+
+The raft implementation, raft simulator and command line visualization are seperated in three reuseable compontens. This means that a another GUI visualization such as in a browser would be easy as the raw raft implementation and simulator can be reused together with a browser visualization module.
+
+The command line visualization is implemented using an HTTP-server that runs with the raft visualization process. To manipulate with the visualization the raft client sends an HTTP-request, which the command server receives and invokes the relevant method on the visualization process.
+
+% subsection visualization (end)
+
+\subsection{Source Code} % (fold)
+\label{sub:source_code}
+
+Can find it through a ZIP-file and on GitHub.
+
+The source code has been attached as appendix on CampusNet as a ZIP-file, but it can also be accessed through GitHub at the url:
+
+{\setlength\parindent{24pt} \href{http://github.com/anderslime/ft-raft}{http://github.com/anderslime/ft-raft}
+
+% subsection source_code (end)
