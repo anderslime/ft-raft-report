@@ -13,7 +13,7 @@ The following code snippet shows the test for the AppendEntries RPC attribute th
 \lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation, language=JavaScript]{code_snippets/whitebox-test-example.js}
 
 \subsubsection{Results}
-The results for all of the whitebox tests can be seen in appendix~\ref{sec:results}.
+Please refer to appendix~\ref{sec:results} for all of the whitebox tests listed in the \texttt{server\_test.js} script.
 
 \subsection{Black box test scenarios}
 Verifying that our solution actually is an implementation of Raft requires more in-depth tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflect the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios are as following with success criteria and a simple use case:
@@ -57,66 +57,19 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item $L$ updates $S$'s log such that it contains $y$ in its log at the correct index and term.
         \end{enumerate}
     \end{enumerate}
-\item \textbf{Safety}:
-    \begin{enumerate}
-    \item There is at most one leader at any given term.
-        \begin{enumerate}
-        \item The user starts the program in which two servers $S_1$ and $S_2$ have the same election time out.
-        \item A leader $L$, being the only one with an election time out smaller than both $S_1$ and $S_2$'s, gets elected.
-        \item The user crashes $L$.
-        \item Both $S_1$ and $S_2$ start their elections.
-        \item Either $S_1$ or $S_2$ is elected as the new leader.
-        \end{enumerate}
-    \item Leader never overwrites its own log but only appends on to it.
-        \begin{enumerate}
-        \item The user starts the program.
-        \item A server $L$ is elected as leader.
-        \item The user requests that a value $x$ is replicated.
-        \item The user requests that a value $y$ is replicated.%Er ikke sikker på at det illustrerer det korrekt.
-        \end{enumerate}
-    \item Logs of every server match each other up to their latest common index in their logs.
-        \begin{enumerate}
-        \item The user starts the program.
-        \item A server $L$ is eleced as leader.
-        \item The user requests that a value $x$ is replicated.
-        \item The user crashes a server $S$.
-        \item The user requests that a value $y$ is replicated.
-        \item All the servers have a commonality that they know of $x$ but not $y$.
-        \end{enumerate}
-    \item The log of a leader contains all previous log entries of leader of previous terms.
-        \begin{enumerate}
-        \item The user starts the program with a server $L$ with the lowest election time out and $S$ with the second lowest.
-        \item $L$ is elected as leader.
-        \item The user crashes a server $S$.
-        \item The user requests that a value $x$ is replicated.
-        \item The user wakes up $S$
-        \item The user crashes $L$
-        \item $S$ has an up to date log.
-        \end{enumerate}
-    \end{enumerate}
-\end{itemize}
+\pagebreak
+An example of a leader election tests looks as following:
+\lstinputlisting[caption=The test for the leader election, language=JavaScript]{code_snippets/blackbox-test-example.js}
+Here a cluster of 5 servers is set up in which the servers talk directly to each other without delay hence giving more reliable behaviour. After a short delay of 1 second the it is then assert that a leader should have been elected. The \texttt{assertOneLeader} function simply checks for all servers in the cluster that only one of them is in the leader state.
+
+In appendix~\ref{sec:tests} a list of acceptance tests for the rest of the components of Raft are proposed, which are not implemented and run in our solution.
 Please note that there is no acceptance test for state machine safety. This is because there's is no actual state machine in our implementation, thus testing this would be impossible. Further details about this in section~\ref{sec:discussion}.
 
-And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as following:
-\begin{itemize}
-\item \textbf{Availability}:
-    \begin{enumerate}
-    \item As long as a majority vote is possible, a leader must always be elected. If not the system should become unavailable.
-        \begin{enumerate}
-        \item The user starts the program with five servers.
-        \item A server $L$ is elected as leader.
-        \item The user crashes $L$ and another server.
-        \item A new leader $L'$ is elected as leader.
-        \item The user crashes $L'$.
-        \item The system becomes unavailable.
-        \end{enumerate}
-    \end{enumerate}
-\end{itemize}
-The last scenarios about safety, availability, and especially timing independence are hard to informally validate since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. %TODO: ok?.
+And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as listed in appendix~\ref{sec:tests}.
+
+The last scenarios about safety, availability, and especially timing independence are hard to formally verify since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. A more detailed discussion of this will be done in section~\ref{sec:discussion}.
 
 \subsubsection{Results}
-The scenarios are implemented and test in the same way as done for the whitebox tests, in which we describe the each scenario with its underlying use case as the real test. Please refer to appendix TODO to see the results of these tests.
-%Hvordan skal de præsenteres/dokumenteres?
+Please refer to appendix~\ref{sec:results} for the results of the tests that are listed in this section - exluding those in appendix~\ref{sec:tests}.
 
-    
 % section evaluation_and_testing (end)
