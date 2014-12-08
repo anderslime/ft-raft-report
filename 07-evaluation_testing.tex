@@ -80,7 +80,9 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user starts the program.
         \item A server $L$ is eleced as leader.
         \item The user requests that a value $x$ is replicated.
-        \item The user c
+        \item The user crashes a server $S$.
+        \item The user requests that a value $y$ is replicated.
+        \item All the servers have a commonality that they know of $x$ but not $y$.
         \end{enumerate}
     \item The log of a leader contains all previous log entries of leader of previous terms.
         \begin{enumerate}
@@ -92,12 +94,10 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user crashes $L$
         \item $S$ has an up to date log.
         \end{enumerate}
-    \item A server's log must be up to date with the leaders upon updating it.
-        \begin{enumerate}
-        \item TODO
-        \end{enumerate}
     \end{enumerate}
 \end{itemize}
+Please note that there is no acceptance test for state machine safety. This is because there's is no actual state machine in our implementation, thus testing this would be impossible. Further details about this in section~\ref{sec:discussion}.
+
 And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as following:
 \begin{itemize}
 \item \textbf{Availability}:
