@@ -1,13 +1,13 @@
 # Preface 👍
 # Introduction 👍
-# Raft - (thumbs up)
+# Raft - 👍
 # Requirements 👍
 # Analysis 👍
 # Leader Election
-  - Theory: (thumbs up)
-  - Design and Implementation: Anders
+  - Theory: 👍
+  - Design and Implementation: (👍)
 # Log Replication
-  - Theory: Anders
+  - Theory: 👍
   - Design and Implementation: Anders
 # Evaluation and Testing
   - At lave nogle af acceptance testene: Anders
