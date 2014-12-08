@@ -9,8 +9,10 @@
 # Log Replication
   - Theory: 👍
   - Design and Implementation: (👍)
-# Evaluation and Testing
+  
+# Testing
   - At lave nogle af acceptance testene (thumbs up)
+# Evaluation and Testing
   - 👍
 # Discussion
   - Joachim, Anders
