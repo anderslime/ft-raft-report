@@ -1,1 +1,61 @@
 \section{Results}
+\label{sec:results}
+\begin{small}
+\begin{spverbatim}
+
+
+  Rules for Followers
+    Respond to RPCs from candidates and leaders
+      ✓ responds to RequestVote RPCs from candidate (88ms)
+      ✓ responds to AppendEntries RPC from leader 
+
+  Rules for Candidates
+    On conversion to candidate, start election:
+      ✓ increments currentTerm 
+      ✓ votes for self 
+      ✓ resets election timer 
+      sending RequestVote RPCs to all other servers
+        ✓ is granted a vote 
+        ✓ is not granted a vote if vote term is less than target server's term 
+        ✓ is converted to follower and updates term when outdated 
+        ✓ is not granted a vote when target server that has already voted for another server 
+        ✓ is not granted a vote when the candidate log is not up to date 
+    If votes received from majority of servers, become leader
+      with 5 peers in network
+        ✓ becomes leader when receiving 3 votes 
+        ✓ does not become leader when receiving 2 votes 
+      with 4 peers in network
+        ✓ becomes leader when receiving 3 votes 
+        ✓ does not become leader when only receiving 2 votes 
+    If AppendEntries RPC received from new leader: convert to follower
+      ✓ becomes follower when receiving AppendEntries from leader 
+    Receiver AppendEntries Implementation
+      ✓ replies false if term < currentTerm 
+      ✓ replies true if term >= currentTerm 
+      ✓ reply false if log doesn't contain entry at prevLogIndex 
+      ✓ reply false if log doesn't contain entry at prevLogIndex whose terms matches prevLogTerm 
+      ✓ reply true if log does contain entry at prevLogIndex whose terms matches prevLogTerm 
+      ✓ appends any new entries not already in the log 
+      ✓ sets commitIndex=leaderCommit if leaderCommit > commitIndex and leaderCommit < index of last new entry 
+      ✓ sets commitIndex=index of last new entry if leaderCommit > commitIndex and index of last new entry < leaderCommit 
+      ✓ sets commitIndex=leaderCommit of last new entry if leaderCommit > commitIndex and index of last new entry == leaderCommit 
+      If an existing entry conflicts with a new one
+        ✓ deletes existing entry and all that follows 
+
+  Client Log Entry Request
+    ✓ client sends log request to server 
+    ✓ client sends log request to a follower 
+
+  General rules for servers
+    ✓ If successful: ipdate nextIndex and matchIndex for follower. 
+    ✓ If AppendEntries fails because of log inconsistency: decrement nextIndex and retry. 
+    If there exists an N such that N > commitIndex .... (advance commit index)
+      ✓ updates commitIndex if majority of servers matches that index 
+      ✓ does not update commitIndex if majority of servers does not match that index 
+
+
+  31 passing (120ms)
+
+
+\end{spverbatim}
+\end{small}

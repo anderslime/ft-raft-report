@@ -13,7 +13,7 @@ The following code snippet shows the test for the AppendEntries RPC attribute th
 \lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation, language=JavaScript]{code_snippets/whitebox-test-example.js}
 
 \subsubsection{Results}
-The results for all of the whitebox tests can be seen in appendix TODO.
+The results for all of the whitebox tests can be seen in appendix~\ref{sec:results}.
 
 \subsection{Black box test scenarios}
 Verifying that our solution actually is an implementation of Raft requires more in-depth tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflect the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios are as following with success criteria and a simple use case:
@@ -75,9 +75,12 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \item The user requests that a value $x$ is replicated.
         \item The user requests that a value $y$ is replicated.%Er ikke sikker på at det illustrerer det korrekt.
         \end{enumerate}
-    \item Logs of every servers match each other up to their latest common index in their logs.
+    \item Logs of every server match each other up to their latest common index in their logs.
         \begin{enumerate}
-        \item TODO
+        \item The user starts the program.
+        \item A server $L$ is eleced as leader.
+        \item The user requests that a value $x$ is replicated.
+        \item The user c
         \end{enumerate}
     \item The log of a leader contains all previous log entries of leader of previous terms.
         \begin{enumerate}
