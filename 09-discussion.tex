@@ -3,7 +3,7 @@
 In this section we will look back at the problem introduced in section \ref{sec:introduction} and evaluate the implementation of Raft. This will be done by comparing our test results with the requirements stated in section \ref{sec:requirements}. Doing this, we can reflect on the overall goal of the project i.e. to gain deeper knowledge of Raft. Further extensions and improvements to the end product will then be proposed and discussed.
 
 \subsection{Reflection on goal}
-The goal of this project was to learn about what is the state of the art in terms of solving the consensus problem. In order to do this, our approach was to gain knowledge about Raft through implementing it in a simulated environment. 
+The goal of this project was to learn about what is the state of the art in terms of solving the consensus problem. In order to do this, our approach was to gain knowledge about Raft through implementing it in a simulated environment.
 The requirements for the implementation stated that it should provide a tool for visualising the behaviour of Raft. \\
 We divided our tests into white- and black box tests in order to document our development process better by testing the behaviour in the white box tests and come with example tests when verifying the solution itself in the black box tests. But the black box tests do not verify the correctness of the implementation, since they do not cover to whole space of possible scenarios. Another way to verify our implementation would have been to use a formal verification tool such as SPIN, which is used for testing models of concurrent systems. But this would require us to develop a whole new solution in another language i.e. Promela which conflicts with our main goal, which was to utilize the flexibility and small over head provided by Javascript. And in terms of the correctness of the implementation of Raft, referring back to the properties for non-Byzantine failure tolerant systems listed in section~\ref{sec:introduction}, the choice of platform again provides a poor basis for a formal verification. But it can be argued that by adopting the behaviour specified in the Raft paper thus also the safety properties, that our implementation upholds to properties of validity and integrity in the cases we have chosen to test.
 
@@ -27,9 +27,12 @@ One of the problems with using a random election timer is that it is hard to tes
 %   - Raft uses randomized timers -> as explained - hard to test random stuff
 %   - We tried to solve with protocol, but:
 %     - This does not necessarily apply to the resulting parallel implementation
+%     - Name the idempotent thing
 %   - One missing point:
 %     - index should be a part of the log entry
 %       -  we used index in array - not correct
+%
+
 
 
     %Det har været et problem at teste randomness, hvilket har været en udfordring.
