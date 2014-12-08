@@ -8,7 +8,7 @@
   - Design and Implementation: (👍)
 # Log Replication
   - Theory: 👍
-  - Design and Implementation: Anders
+  - Design and Implementation: (👍)
 # Evaluation and Testing
   - At lave nogle af acceptance testene: Anders
   - 👍

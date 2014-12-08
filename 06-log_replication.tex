@@ -67,6 +67,8 @@ Besides replicating its log, the leader also need to keep state of the progress 
 
 The heartbeat is implemented and used by the leader as an independent mechanism that sends an AppendEntriesRPC every $t$ milliseconds using the JavaScript function \verb$setInterval$. Alternatively the heartbeat could be dependent on the response of the follower by sending a heartbeat $i$ seconds after the leader got a response. But this would introduce extra complexity as we would need to handle the case where the follower is down.
 
+The AppendEntriesRPC is as the RequestVoteRPC explained in section~\ref{sub:requestvote_rpc} done in parallel. In order to both be able to test the behaviour involing AppendEntriesRPC and simulate real requests in the simulation we have added AppendEntries to the \verb$Direct$ and \verb$DirectAsync$ protocols.
+
 % subsection implementation (end)
 
 % section log_replication (end)
