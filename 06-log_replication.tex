@@ -6,7 +6,7 @@ In this section we will describe how Raft handles log replication, discuss some 
 \subsection{Log Replication in Raft} % (fold)
 \label{sub:log_replication_in_raft}
 
-The general purpose of the log replication feature in a consens algorithm and in Raft is to keep a log history of commands applied to the state machine in order to compare integrity between servers.
+The general purpose of the log replication feature in a consensus algorithm and in Raft is to keep a log history of commands applied to the state machine in order to compare integrity between servers.
 
 Log entries are appended to the log when a client requests a given command to be applied. The flow of receiving the request from the client, commiting the command to the log and responding the client is illustrated in figure~\ref{fig:log_replication_example}. In overall the steps of committing a command in Raft can be written as:
 
@@ -21,7 +21,7 @@ Log entries are appended to the log when a client requests a given command to be
 \begin{figure}[ht!]
   \centering
   \includegraphics[width=0.7\textwidth]{figures/log-replication-example.png}
-  \caption{An illustration of how the leader succesfully apply a command from the client. At first \emph{(a)} the client requests the leader to apply the command x$\rightarrow$5 to the state machine, then \emph{(b)} the applies the command to its own log and \emph{(c)} replicates it to the followers. \emph{(d)} The followers respond positively if the command is applied to their log and the leader commits the entry from the client, when a majority of the servers have appended the log. \emph{(e)} The followers will receive information that the entry is commited and \emph{(f)} when the leader knows that a majority of the servers have applied the command, it will respond to the client positively and append it to the state machine}
+  \caption{An illustration of how the leader successfully applies a command from the client. At first \emph{(a)} the client requests the leader to apply the command x$\rightarrow$5 to the state machine, then \emph{(b)} it applies the command to its own log and \emph{(c)} replicates it to the followers. \emph{(d)} The followers respond positively if the command is applied to their log and the leader commits the entry from the client, when a majority of the servers have appended the log. \emph{(e)} The followers will receive information that the entry is commited and \emph{(f)} when the leader knows that a majority of the servers have applied the command, it will respond to the client positively and append it to the state machine}
   \label{fig:log_replication_example}
 \end{figure}
 
@@ -44,15 +44,15 @@ The first time a server receives an AppendEntries RPC it will just append it to 
 \subsection{Handling Log Inconsistency} % (fold)
 \label{sub:handling_log_inconsistency}
 
-The scenario explained this far is the sucessful one, but in distributed systems failures such as network partitions and single server crashes are not rare and should be handled. Raft have behaviour for handling different kind of log inconstencies, which compared to the true log of the leader can be:
+The scenario explained this far is the successful one, but in distributed systems failures such as network partitions and single server crashes are not rare and should be handled. Raft has behaviour for handling different kinds of log inconsistencies, which compared to the true log of the leader can be:
 
 \begin{enumerate}
   \item A follower is missing entries
   \item A follower has extra entries
-  \item A follower is both missin entries and has extra entries
+  \item A follower is both missing entries and has extra entries
 \end{enumerate}
 
-All situations of inconcistencies are handled by forcing the followers to duplicate the leaders log. The first situation is handled through the AppendEntries RPC by finding the largest common commited index and replicate the missing entries from the leader. The second scenario is handled by finding the largest common commited index and delete all entries following. Thereafter the situation is as the first and handled so. The last scenario is handled as the second.
+All situations of inconsistencies are handled by forcing the followers to duplicate the leaders log. The first situation is handled through the AppendEntries RPC by finding the largest common commited index and replicate the missing entries from the leader. The second scenario is handled by finding the largest common commited index and delete all entries following. Thereafter the situation is as the first and handled so. The last scenario is handled as the second.
 
 % subsection handling_log_inconsistency (end)
 
