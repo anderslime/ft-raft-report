@@ -9,14 +9,12 @@ We divided our tests into white- and black box tests in order to document our de
 
 \subsection{Experiences}
 
-
-Implementing Raft required some inspiration from other current implementations in order to get a complete and working that reflected the specification in the paper \cite{Raft}.
+Implementing Raft required some inspiration from other current implementations in order to get a complete and working solution that reflected the specification in the paper \cite{Raft}.
 
 \subsection{Further work}
 
 % Using random election timeout and trouble with testing.
 One of the problems with using a random election timer is that it is hard to test because of it is not possible to assert a random result. It would be possible to assert a property of the whole system such as ``There is only one leader after x seconds''. But the fact that the test have to be delayed several milliseconds make the tests slow and thereby slows down the development flow.
-
 
 % - Hvordan gik det?
 % - Hvad var svært?
@@ -32,8 +30,6 @@ One of the problems with using a random election timer is that it is hard to tes
 %     - index should be a part of the log entry
 %       -  we used index in array - not correct
 %
-
-
 
     %Det har været et problem at teste randomness, hvilket har været en udfordring.
 % section discussion (end)
