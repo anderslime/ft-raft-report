@@ -69,6 +69,10 @@ The heartbeat is implemented and used by the leader as an independent mechanism 
 
 The AppendEntriesRPC is as the RequestVoteRPC explained in section~\ref{sub:requestvote_rpc} done in parallel. In order to both be able to test the behaviour involing AppendEntriesRPC and simulate real requests in the simulation we have added AppendEntries to the \verb$Direct$ and \verb$DirectAsync$ protocols.
 
+An important implementation detail of the log replication is that the log entries need to contain the index and the action of appending a log entry need to be idempotent as specified in the paper~\cite[p.~10]{Raft}. Our initial implementation was by using the array index of the log to control indexes, but this meant that if the delay of the RPC's was close to the heartbeat interval the leader would send two AppendEntriesRPC's to the same active follower without getting the result of the first AppendEntriesRPC which results in a race condition that makes the follower append the same entries twice. To avoid this the leader assigns an incremental index to the log entry when received by a client and secondly the method of appending a log entry is made idempotent. The code for the idempotent log append method is seen in code example~\ref{code:append_method}.
+
+\lstinputlisting[label={code:append_method},caption={The method used by followers to append entries from the leader to the log. This method is idempotent, which means that appending the same entry to the exact same log twice (or more) will give the same result.}, language=JavaScript]{code_snippets/idempotent_append_entry.js}
+
 % subsection implementation (end)
 
 % section log_replication (end)
