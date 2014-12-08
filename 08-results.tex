@@ -7,12 +7,24 @@ As mentioned, the white box tests were derived from Raft's behaviour in its cond
 The black box tests, however, were only done for a given set of scenarios in order to show that the fault tolerant features of the implementation reflects those described in the paper.
 
 \subsection{Running the simulator}
-On top of the tests, a simulator that visualizes the implementation was done in order to get illustrative feature to show how Raft solves the consensus problem in presence of faulty servers. The screenshot belows showa run of the simulator.
+On top of the tests, a simulator that visualizes the implementation was done in order to get illustrative feature to show how Raft solves the consensus problem in presence of faulty servers. The screenshot in figure~\ref{fig:example1}belows shows a run of the simulator.
 
-\subsection{Evaluating of result}
-\begin{figure}[th!]
+\begin{figure}[H]
 \centering
 \includegraphics[scale = 0.5]{screenshot-coming-leader-election}
 \caption{Example run of the simulator in the state where a leader has not yet been elected.}
-\label{fig:my_label}
+\label{fig:example1}
 \end{figure}
+
+The simulator lists the servers by their id, state, the amount of entries in its log, its latest commit index, and its time out which decrements. Server 4 is colored red to illustrates that it has crashed.
+The screenshot in figure~\ref{fig:example2} then shows the situation where a server times out and starts an election by requesting votes from the other servers.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale = 0.5]{screenshot-ongoing-leader-election}
+\caption{Example run of the simulator in the state where a server has started an election.}
+\label{fig:example}
+\end{figure}
+
+\subsection{Evaluating of result}
+The output results of the both the white box and black box test are given in appendix~\ref{sec:results_app}. 
