@@ -5,6 +5,7 @@ In this section we will look back at the problem introduced in section \ref{sec:
 \subsection{Reflection on goal}
 The goal of this project was to learn about what is the state of the art in terms of solving the consensus problem. In order to do this, our approach was to gain knowledge about Raft through implementing it in a simulated environment. 
 The requirements for the implementation stated that it should provide a tool for visualising the behaviour of Raft. 
+We divided our tests into white- and black box tests in order to document our development process better by testing the behaviour in the white box tests and come with example tests when verifying the solution itself in the black box tests. But the black box tests do not verify the correctness of the implementation, since they do not cover to whole space of possible scenarios. Another way to verify our implementation would have been to use a formal verification tool such as SPIN, which is used for testing models of concurrent systems. But this would require us to develop a whole new solution in another environment which conflicts with a main goal, which was to utilize the flexibility and small over head provided by Javascript.
 
 \subsection{Experiences}
 Implementing Raft required some inspiration from other current implementations in order to get a complete and working that reflected the specification in the paper \cite{Raft}. TODO

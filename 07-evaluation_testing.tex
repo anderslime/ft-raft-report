@@ -51,7 +51,6 @@ Verifying that our solution actually is an implementation of Raft requires more 
         \begin{enumerate}
         \item The user starts the program.
         \item A server $L$ is elected as leader.
-        \item The user requests that a value $x$ is replicated.
         \item The user crashes a server $S$.
         \item The user requests that a value $y$ is replicated.
         \item The user wakes up $S$.
@@ -63,7 +62,7 @@ Verifying that our solution actually is an implementation of Raft requires more 
     \item There is at most one leader at any given term.
         \begin{enumerate}
         \item The user starts the program in which two servers $S_1$ and $S_2$ have the same election time out.
-        \item A leader $L$, being the only one with an election time out smaller than both $S_1$ and $S_2$'s, get elected.
+        \item A leader $L$, being the only one with an election time out smaller than both $S_1$ and $S_2$'s, gets elected.
         \item The user crashes $L$.
         \item Both $S_1$ and $S_2$ start their elections.
         \item Either $S_1$ or $S_2$ is elected as the new leader.
