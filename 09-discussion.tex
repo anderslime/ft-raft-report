@@ -9,7 +9,16 @@ We divided our tests into white- and black box tests in order to document our de
 
 \subsection{Experiences}
 
-Implementing Raft required some inspiration from other current implementations in order to get a complete and working solution that reflected the specification in the paper \cite{Raft}.
+The biggest challenge of implementing the Raft algorithm is to implement and test the situations in parallel (such as mentioned with log replication and RPC's in elections) and the leader election driven by a randomly initialized timer.
+
+In the situations in parallel we have suggested the method of using a protocol supporting both direct and delayed communicating between servers in section~\ref{sub:requestvote_rpc}. This made it easy to test the behaviour involving RPC's, but there are challenges in parallel computing that cannot be hidden with abstractions. The first one is race conditions which we experienced in the simulation when the RPC delay is to high in relation to the heartbeat interval. If the leader e.g. replicates a log entry $x\rightarrow5$ to a follower and before the follower is able to respond to the RPC (e.g. because of latency) a new hearbeat interval is started and the leader blindly tries to replicate the same log entry with $x\rightarrow5$. This will make the follower append the same entry twice. The situation is illustrated in figure~\ref{fig:replication_race_condition}. Although we discovered this implementation issue it did not ruin the consensus due to the safety rules of Raft and the problem was fixed by making the log appending method of followers idempotent as described in section~\ref{sub:log_replication_implementation}.
+
+\begin{figure}
+\centering
+\includegraphics[scale = 0.5]{figures/replication_race_condition.png}
+\caption{A situation with possible race condition when idempotent log appends is not implemented. This figure illustrates that some situations are only present when in parallel (or asynchronous).}
+\label{fig:log_replication_implementation}
+\end{figure}
 
 \subsection{Further work}
 
