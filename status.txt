@@ -9,12 +9,16 @@
 # Log Replication
   - Theory: 👍
   - Design and Implementation: (👍)
-  
 # Testing
-  - At lave nogle af acceptance testene (thumbs up)
-# Evaluation and Testing
   - 👍
+# Results
+  - Testresults
+  - Screenshots/videos
+>>>>>>> e8a35fa... tmp
 # Discussion
+  - Results vs. Requirements
+  - Experience
+    - Hard to test parallel algorithms
   - Joachim, Anders
 # Conclusion
   - At last

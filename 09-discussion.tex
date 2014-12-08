@@ -23,6 +23,14 @@ One of the problems with using a random election timer is that it is hard to tes
 % - Hvad kunne vi gøre bedre?
 % - Future improvements?
 
+% Hard to test parallel algorithms
+%   - Raft uses randomized timers -> as explained - hard to test random stuff
+%   - We tried to solve with protocol, but:
+%     - This does not necessarily apply to the resulting parallel implementation
+%   - One missing point:
+%     - index should be a part of the log entry
+%       -  we used index in array - not correct
+
 
     %Det har været et problem at teste randomness, hvilket har været en udfordring.
 % section discussion (end)
