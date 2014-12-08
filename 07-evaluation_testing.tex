@@ -12,9 +12,6 @@ Although the functional tests, constructed during implementation, can be directl
 The following code snippet shows the test for the AppendEntries RPC attribute that a receiver should reply false if the given RPC call contains a term < currentTerm.
 \lstinputlisting[caption=The test for the AppendEntries RPC Receiver implementation, language=JavaScript]{code_snippets/whitebox-test-example.js}
 
-\subsubsection{Results}
-Please refer to appendix~\ref{sec:results} for all of the whitebox tests listed in the \texttt{server\_test.js} script.
-
 \subsection{Black box test scenarios}
 Verifying that our solution actually is an implementation of Raft requires more in-depth tests in the form of validating that we uphold the properties that are argued to provide consensus. This is done by constructing a set of scenarios that reflect the behaviour of the components of Raft: Leader Election, Log Replication, and Safety. The scenarios are as following with success criteria and a simple use case:
 
@@ -68,8 +65,5 @@ Please note that there is no acceptance test for state machine safety. This is b
 And referring back to requirements in section \ref{sec:requirements}. The solution should also satisfy the requirements about availability and timing independence. The success criteria and scenarios for these requirements are as listed in appendix~\ref{sec:tests}.
 
 The last scenarios about safety, availability, and especially timing independence are hard to formally verify since the program simulates a concurrent system, in which the utilisation of a formal verification tool would be necessary, which is out of scope of this project. A more detailed discussion of this will be done in section~\ref{sec:discussion}.
-
-\subsubsection{Results}
-Please refer to appendix~\ref{sec:results} for the results of the tests that are listed in this section - exluding those in appendix~\ref{sec:tests}.
 
 % section evaluation_and_testing (end)

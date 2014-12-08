@@ -10,7 +10,7 @@
   - Theory: 👍
   - Design and Implementation: (👍)
 # Evaluation and Testing
-  - At lave nogle af acceptance testene: Anders
+  - At lave nogle af acceptance testene (thumbs up)
   - 👍
 # Discussion
   - Joachim, Anders

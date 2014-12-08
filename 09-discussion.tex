@@ -8,7 +8,9 @@ The requirements for the implementation stated that it should provide a tool for
 We divided our tests into white- and black box tests in order to document our development process better by testing the behaviour in the white box tests and come with example tests when verifying the solution itself in the black box tests. But the black box tests do not verify the correctness of the implementation, since they do not cover to whole space of possible scenarios. Another way to verify our implementation would have been to use a formal verification tool such as SPIN, which is used for testing models of concurrent systems. But this would require us to develop a whole new solution in another language i.e. Promela which conflicts with our main goal, which was to utilize the flexibility and small over head provided by Javascript. And in terms of the correctness of the implementation of Raft, referring back to the properties for non-Byzantine failure tolerant systems listed in section~\ref{sec:introduction}, the choice of platform again provides a poor basis for a formal verification. But it can be argued that by adopting the behaviour specified in the Raft paper thus also the safety properties, that our implementation upholds to properties of validity and integrity in the cases we have chosen to test.
 
 \subsection{Experiences}
-Implementing Raft required some inspiration from other current implementations in order to get a complete and working that reflected the specification in the paper \cite{Raft}. TODO
+
+
+Implementing Raft required some inspiration from other current implementations in order to get a complete and working that reflected the specification in the paper \cite{Raft}. 
 \subsection{Further work}
 
 % Using random election timeout and trouble with testing.
