@@ -1,6 +1,6 @@
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
-The end product simulates a cluster of servers, where each server can be crashed and later awoken. The user can also request that a value is replicated throughout the system, after which the servers should reach consensus on this i.e. a majority of servers should return a successful log replication. This fault tolerant feature is provided by giving each server a Raft component.
-The implementation of Raft was done in Javascript, which provided us with a much deeper understanding of Raft and the consensus problem and a solution. An important lesson learned was that the choice of tool used for the job, i.e. simulating a concurrent system and verification its correctness, serves an important role both in terms of implementation overhead and testing.
-
+The end product simulates a cluster of servers, where each server can be crashed and later restarted. The user can also request that a value is replicated throughout the system, after which the servers should reach consensus on this i.e. a majority of servers should return a successful log replication. This fault tolerant feature is provided by giving each server a Raft implementation.
+The implementation of Raft was done in Javascript, which provided us with a much deeper understanding of Raft and the consensus problem and its possible solution. An important lesson learned was that the choice of tool used for the job, i.e. simulating a concurrent system and verification its correctness, serves an important role both in terms of implementation overhead and verification.
+Developing the solution was done by adopting the behaviour that is specified in the Raft paper, and for each of these behaviour constructing a test that should then be satisfied before moving on to the next behaviour. Practicing this behavioural development process allowed us to structurally implement without 
 % section conclusion (end)
