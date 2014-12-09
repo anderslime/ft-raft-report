@@ -1,13 +1,20 @@
 \section{Leader Election} % (fold)
 \label{sec:leader_election}
-In this section we will start describing the component of leader election done in Raft. Then describe and discuss the challenges when implementing this.
+In this section we will describe the component of leader election in Raft followed by a discussion of the design and implementation choices made during implementation.
 
 \subsection{Leader election in Raft}
-As mentioned in section \ref{sec:raft} one of the two main components of Raft is its leader election. After a successful leader election the given leader is responsible of replicating commands it receives from a client to the rest of the followers called log replication, which is explained in section \ref{sec:log_replication}. All servers contain an implementation of Raft, having a log of commands requested by clients. A server can be in three states: leader, candidate or follower. Most of the servers in the system will be in the 'follower' state in which they act as an active part receiving heart beat messages from the current leader. At most one leader exists at any given moment denoted 'a term'. The term is incremented each time a new leader is elected. In distributed systems the term is the systems logical clock in which any entry in the servers logs has a term attached to it in order to know when that value has been replicated to it.
+As mentioned in section \ref{sec:raft} one of the two main components of Raft is its leader election. After a successful leader election the given leader is responsible of replicating commands it receives from a client to the rest of the followers, which is explained in the log replication section \ref{sec:log_replication}. All servers contain an implementation of Raft, having a log of commands requested by clients. A server can be in three states: ``leader'', ``candidate'' or ``follower''. The servers convert to different states in different scenarious defined by the Raft specification and illustrated in figure~\ref{fig:state_state_machine}. As default the servers in the system will be in the ``follower'' state in which they act as an active part receiving heartbeat messages from the current leader. At most one leader exists at any given election term. The election term is incremented each time a new leader is elected. In distributed systems the term is the systems logical clock in which any entry in the server's log has a term attached to it in order to know when that value has been replicated to.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.6\linewidth]{figures/server_state_machine.png}
+\caption{A graph illustrating the three different states of Raft servers and the situations in which they convert to other states. Figure taken from the Raft paper~\cite{Raft}.}
+\label{fig:state_state_machine}
+\end{figure}
 
 Figure~\ref{fig:election_example} illustrates the scenario in which a leader is elected:
 
-In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out, because it has not received any valid heart beat messages from a leader, and becomes a candidate. If this candidate receives a majority of votes it transitions to the leader state after which it has the responsibilities of a leader as described in section \ref{sec:raft}. The leader claims its leadership by sending out heartbeats, where if a server receives a heartbeat request from another server it is instantly converted to follower and recognizes the source as leader.
+In the beginning of the illustration, on initial system startup, every server is a follower until $P1$ times out, because it has not received any valid heart beat messages from a leader. When $P1$ times out it becomes a ``candidate''. If this candidate receives a majority of votes it transitions to the leader state after which it has the responsibilities of a leader as described in section \ref{sec:raft}. The leader claims its leadership by sending out heartbeats, where if a server receives a heartbeat request from another server it is instantly converted to follower and recognizes the source as leader.
 
 \begin{figure}[ht!]
 \centering
@@ -25,12 +32,12 @@ Figure~\ref{fig:failure_example} shows how Raft will tolerate a faulty leader. H
 \label{fig:failure_example}
 \end{figure}
 
-It should also be noted that upon transitioning to the candidate state and requesting votes, another server might have been requesting votes before this. In this situation the candidate would receive a heart beat message from a leader with a term at least as large as its own, after which is transitions back to follower.
-The situation in which a majority vote is not achieved by any candidate, the candidates will issue yet another election once they time out again. And in order to avoid split these kinds of situation too frequently i.e. split votes, Raft gives each server an arbitrary time out within a given interval.
+It should also be noted that upon transitioning to the candidate state and requesting votes, another server might have been requesting votes before this. In this situation the candidate would receive a heartbeat message from a leader with a term at least as large as its own, after which is transitions back to follower.
+The situation in which a majority vote is not achieved by any candidate, the candidates will issue yet another election once they time out again. In order to avoid tied election such as these Raft uses a randomized time out within a given interval.
 
 It should also be noted that since the availability, provided by Raft, relies on the majority votes and only non-Byzantine failures, the algorithm can thus only uphold these properties in a network where $3F \leq N$, where $F$ is the amount of failures and $N$ is the amount of processes in the system.~\cite{Fischer}
 
-Looking back at the Two Generals Problem, Raft is only be able to solve the problem if a majority vote would be possible, which it is not. So in order to solve this problem when utilising Raft, one must add another general to the scenario such that there are an uneven number of generals in the system. We should also modify the problem such that the messenger always tells the truth (i.e. cannot suffer from Byzantine failures). Now that we have three generals and an ``uncapturable'' messenger, they will reach consensus by finding a leader after which he decides when to launch the attack.
+Looking back at the Two Generals Problem, Raft is only able to solve the problem if a majority vote would be possible which cannot be the case with only two ``servers'' (or generals). In order to solve this problem when utilising Raft, one must add another general to the scenario such that there are more than two servers in the system. We should also modify the problem such that the messenger always tells the truth (i.e. cannot suffer from Byzantine failures). Now that we have three generals and an ``uncapturable'' messenger, they will reach consensus by finding a leader after which he decides when to launch the attack.
 
 % TODO: explain figure of different states (maybe take it from the Raft Paper)
 
@@ -43,7 +50,7 @@ Our Raft implementation consists of two major parts:
 
 \begin{enumerate}
   \item An election timer that is reset with a random time in a specified interval
-  \item RequestVote RPC implementation that with methods for handling invocation and receiving RequestVote RPC request and response
+  \item RequestVote RPC implementation with methods for handling invocation and receiving RequestVote RPC request and response
 \end{enumerate}
 
 \subsubsection{Election Timer} % (fold)
