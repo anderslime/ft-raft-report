@@ -1,6 +1,17 @@
 \section{Conclusion} % (fold)
 \label{sec:conclusion}
 The end product simulates a cluster of servers, where each server can be crashed and later restarted. The user can also request that a value is replicated throughout the system, after which the servers should reach consensus on this i.e. a majority of servers should return a successful log replication. This fault tolerant feature is provided by giving each server a Raft implementation.\\ \\
-The implementation of Raft was done in Javascript, which provided us with a much deeper understanding of Raft and the consensus problem and its possible solution. An important lesson learned was that the choice of tool used for the job, i.e. simulating a concurrent system and verification its correctness, serves an important role both in terms of implementation overhead and verification.\\ \\
+The implementation of Raft was done in Javascript which provided us with a much deeper understanding of Raft and the consensus problem and its possible solution. An important lesson learned was that the choice of tool used for the job, i.e. simulating a concurrent system and verification its correctness, serves an important role both in terms of implementation overhead and verification.\\ \\
 Developing the solution was done by adopting the behaviour that is specified in the Raft paper, and for each of these behaviour constructing a test that should then be satisfied before moving on to the next behaviour. Practicing this behavioural development process allowed us to structurally implement Raft without having to give much thought to the overall design.
+
+The result of the project is a simulation tool for the command line that simulates a cluster of servers, where the user is able to crash, restart and request the leader to append entries to the log. The Raft simulation implementation ensures that the leader replicates the entry to all other servers and handles the server crashes and restarts such that the servers will have consensus and the system is always be available (as long as no more than a third of the servers are active).
+
+One of the focuses was to test and verify the implementation, which has been difficoult because parts of Raft depends on parallelism, random values and timing. In order to make these parts more testable we have used specific protocols for testing which made it easier to test, but the abstraction did not succeed in taking the challenges in parallel computing and timing into account.
+
+The implementation, which is in JavaScript, has provided us with a much deeper understanding of the consensus problem and Raft as a solution. Raft was implementated with an iterative approach by constructing a test describing behaviour from the Raft specification followed by an implementation of the specificed behaviour that satisfies the test. Practicing this behavioural development process allowed us to structurally implement Raft without having to give much thought to the overall design and made it easy to refactor the code that was backed by behavioural tests of the whole system.
+
+% ??
+
+
+
 % section conclusion (end)
