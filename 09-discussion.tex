@@ -6,7 +6,7 @@ In this section we will look back at the problem introduced in section \ref{sec:
 The requirements stated that we should have tool that illustrated a given distributed system with a number of servers, implementing Raft as a solution to finding consensus in the presence of faulty servers. We evaluate each functional requirement by referring to the results in section~\ref{sec:results} as following:
 
 \begin{enumerate}
-\item The tool indeed illustrates a distributed system where the user can issue commands both related to Raft but also for simulation purposes.
+\item The tool illustrates a distributed system where the user can issue commands both related to Raft but also for simulation purposes.
 \item The tool provides fault tolerance by utilising Raft, in the since that it will tolerate servers that crash in a non-Byzantine manner.
 \item The user can give parameters for: time between heartbeats, how many servers the system should consist of, latency for RPC's, and interval for random election timers.
 \item The user can crash a server through the client by issuing the correct command for it in the console.
@@ -16,12 +16,13 @@ The requirements stated that we should have tool that illustrated a given distri
 \item The user can request that an entry is replicated through the system by issuing the correct command for it in the console.
 \item The tool visualized the system through a console GUI.
 \end{enumerate}
-\\
+
 It is hard to verify whether we have met the quality requirement or not. These it due to the lag of static behaviour of the system caused by the the randomized election time outs and general concurrent aspects of the system. This is discussed in further detail in the next section.
 
 \subsection{Reflection on goal}
 The goal of this project was to learn about what is the state of the art in terms of solving the consensus problem. In order to do this, our approach was to gain knowledge about Raft through implementing it in a simulated environment.
-The requirements for the implementation stated that it should provide a tool for visualising the behaviour of Raft. \\
+The requirements for the implementation stated that it should provide a tool for visualising the behaviour of Raft.
+
 We divided our tests into white- and black box tests in order to document our development process better by testing the behaviour in the white box tests and come with example tests when verifying the solution itself in the black box tests. But the black box tests do not verify the correctness of the implementation, since they do not cover to whole space of possible scenarios. Another way to verify our implementation would have been to use a formal verification tool such as SPIN, which is used for testing models of concurrent systems. But this would require us to develop a whole new solution in another language i.e. Promela which conflicts with our main goal, which was to utilize the flexibility and small over head provided by Javascript.
 
 In terms of the correctness of the implementation of Raft, referring back to the properties for non-Byzantine failure tolerant systems listed in section~\ref{sec:introduction}, the choice of platform again provides a poor basis for a formal verification. But it can be argued that by adopting the behaviour specified in the Raft paper thus also the safety properties, that our implementation upholds the properties of validity and integrity in the cases we have chosen to test.
