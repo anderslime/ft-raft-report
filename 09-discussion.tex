@@ -26,6 +26,11 @@ The random election timer used in leader election in Raft as explained in sectio
 
 \subsection{Future work}
 
+The code for this project is open source and can easily be extended. One interesting extension would be to visualize the server in a graph with visualized RPC-requests to see the communication between the servers and maybe the data send back and foward.
+
+As mentioned it is hard to verify a Raft implementation because some parts of algorithm rely on parallelism, random values and timing. A future project could be about how such components can be verified either formally or by using tests.
+
+A third extension for further work would be to build or use a monitoring tool to measure the availability of the implementation. The simulation tools build in this project could then be exposed to relaistic loads and operations in a longer period of time in which the monitoring tool could measure and an estimated a Mean time between failures to calculate the availability and easier verify the Timing independence quality requirement specified in section~\ref{sec:requirements}.
 
 % Using random election timeout and trouble with testing.
 
