@@ -29,7 +29,7 @@ Log entries are appended to the log when a client requests a given command to be
 \subsubsection{AppendEntries RPC/Heartbeat} % (fold)
 \label{ssub:appendentries_rpc_heartbeat}
 
-The log replication mechanism explained in these steps are in Raft the same heartbeat mechanism used for claiming leadership as explained in section~\ref{sec:leader_election}. The hearbeat/log replication request is a Remote Procedure Call (RPC) called \emph{AppendEntries RPC}. The leader invokes the RPC with information for the follower duplicate the leaders log and be in consensus. The follower then responds the leader with success if it is fully replicated or else failure.
+The log replication mechanism explained in these steps are in Raft the same heartbeat mechanism used for claiming leadership as explained in section~\ref{sec:leader_election}. The hearbeat/log replication request is a Remote Procedure Call (RPC) called \emph{AppendEntries RPC}. The leader invokes the RPC with information for the follower to duplicate the leaders log and be in consensus. The follower then responds the leader with success if it is fully replicated or else failure.
 
 % subsubsection appendentries_rpc_heartbeat (end)
 
@@ -44,7 +44,7 @@ The first time a server receives an AppendEntries RPC it will just append it to 
 \subsection{Handling Log Inconsistency} % (fold)
 \label{sub:handling_log_inconsistency}
 
-The scenario explained this far is the successful one, but in distributed systems failures such as network partitions and single server crashes are not rare and should be handled. Raft has behaviour for handling different kinds of log inconsistencies, which compared to the true log of the leader can be:
+The scenario explained this far is the successful one, but in distributed systems failures such as network partitions and single server crashes are not rare and if this failure happens in the middle of the steps in figure~\ref{fig:log_replication_example} it could result in inconsistent logs througout the system. Raft has behaviour for handling different kinds of log inconsistencies, which compared to the true log of the leader can be:
 
 \begin{enumerate}
   \item A follower is missing entries
@@ -63,13 +63,13 @@ The log and heartbeat are two implementation specific parts of the Raft algorith
 
 Normally the log should be persistent, but since the implementation in this project is only for visualization, persistency is not implemented. The log is implemented as an object \verb$Log$ that works as an abstraction on top of a simple array containing the entries. For a programmer this abstraction is important since Raft is documented and specified as being a 1-indexed system, where most databases and arrays in various programming languages are 0-indexed.
 
-Besides replicating its log, the leader also need to keep state of the progress of the follower's logs. More precisely it need to know the next empty index of a given follower's log and the index of largest log entry that matches in the leader log. In our implementation this state is kept in the \verb$LeaderState$ object that is initialized (or reset) when a new leader is elected.
+Besides replicating its log, the leader also need to keep state of the progress of the follower's logs. More precisely it need to know the next empty index of a given follower's log and the index of largest log entry that matches in the leader log. In our implementation this state is kept in the \verb$LeaderState$ object that is initialized (and reset) when a new leader is elected.
 
-The heartbeat is implemented and used by the leader as an independent mechanism that sends an AppendEntriesRPC every $t$ milliseconds using the JavaScript function \verb$setInterval$. Alternatively the heartbeat could be dependent on the response of the follower by sending a heartbeat $i$ seconds after the leader got a response. But this would introduce extra complexity as we would need to handle the case where the follower is down.
+The heartbeat is implemented and used by the leader as an independent mechanism that sends an AppendEntriesRPC every $t$ milliseconds using the JavaScript function \verb$setInterval$. Alternatively the heartbeat could be dependent on the response of the follower by sending a heartbeat $i$ seconds after the leader got a response, but this would introduce extra complexity as we would need to handle the case where the follower is down.
 
 The AppendEntriesRPC is as the RequestVoteRPC explained in section~\ref{sub:requestvote_rpc} done in parallel. In order to both be able to test the behaviour involing AppendEntriesRPC and simulate real requests in the simulation we have added AppendEntries to the \verb$Direct$ and \verb$DirectAsync$ protocols.
 
-An important implementation detail of the log replication is that the log entries need to contain the index and the action of appending a log entry need to be idempotent as specified in the paper~\cite[p.~10]{Raft}. Our initial implementation was by using the array index of the log to control indexes, but this meant that if the delay of the RPC's was close to the heartbeat interval the leader would send two AppendEntriesRPC's to the same active follower without getting the result of the first AppendEntriesRPC which results in a race condition that makes the follower append the same entries twice. To avoid this the leader assigns an incremental index to the log entry when received by a client and secondly the method of appending a log entry is made idempotent. The code for the idempotent log append method is seen in code example~\ref{code:append_method}.
+An important implementation detail of the log replication is that the log entries need to contain the index and the action of appending a log entry need to be idempotent as specified in the paper~\cite[p.~10]{Raft}. Our initial implementation was by using the array index of the log to control indexes, but this meant that if the delay of the RPCs was close to the heartbeat interval the leader would send two AppendEntriesRPCs to the same active follower without getting the result of the first AppendEntriesRPC which results in a race condition that makes the follower append the same entries twice. To avoid this the leader assigns an incremental index to the log entry when received by a client and secondly the method of appending a log entry is made idempotent. The code for the idempotent log append method is seen in code example~\ref{code:append_method}.
 
 \lstinputlisting[label={code:append_method},caption={The method used by followers to append entries from the leader to the log. This method is idempotent, which means that appending the same entry to the exact same log twice (or more) will give the same result.}, language=JavaScript]{code_snippets/idempotent_append_entry.js}
 
