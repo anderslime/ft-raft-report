@@ -26,7 +26,7 @@ The screenshot in figure~\ref{fig:example2} then shows the situation where a ser
 \label{fig:example2}
 \end{figure}
 
-And lastly the screenshot in figure~\ref{fig:example3} shows the situation in which a crashed server hasn't had its log updated since the leader does not get replies from the heartbeat messages it send to it.
+And lastly the screenshot in figure~\ref{fig:example3} shows the situation in which a crashed server hasn't had its log updated since the leader does not get replies from the heartbeat messages it send to it. In the moment a log entry from the client is appended there is to underline on the log entries in the visualization. On figure~\ref{fig:example3} all log entries have an underline since they are committed.
 
 \begin{figure}[H]
 \centering
@@ -50,8 +50,6 @@ The command line visualization is implemented using an HTTP-server that runs wit
 
 \subsection{Source Code} % (fold)
 \label{sub:source_code}
-
-Can find it through a ZIP-file and on GitHub.
 
 The source code has been attached as appendix on CampusNet as a ZIP-file, but it can also be accessed through GitHub at the url:
 
