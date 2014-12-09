@@ -10,7 +10,7 @@ IN this introductory section we will present he fundamental problem when talking
 \subsection{Problem}
 Reaching consensus in a distributed system means that all processes in the network eventually agree on some value or state of the entire system. This is often needed when processes might be faulty thus bringing reliability and availability at stake on single-point-of-failure. Upholding these properties in a given distributed system then relies on the architecture utilised and hardware implemented in the processes.
 
-A simple solution to this could be to initiate a vote among all correct processes on to what the value is in which the value is the result of the majority vote. The figure~\ref{consensus} below illustrates an example of a distributed system consisting of a number of notes. The value \textit{x} is what the system must agree upon. Though here we have a faulty process \textit{P1} which is responsible to give back the result. Taking the fact of connectivity of system aside, the system will become unavailable because of the now faulty process.
+A simple solution to this could be to initiate a vote among all correct processes on to what the value is in which the value is the result of the majority vote and thereby mask the faulty processes. The figure~\ref{consensus} below illustrates an example of a distributed system consisting of a number of notes. The value \textit{x} is what the system must agree upon. Though here we have a faulty process \textit{P1} which is responsible to return the result. Taking the fact of connectivity of system aside, the system will become unavailable because of the now faulty process.
 
 \begin{figure}[h]
 	\centering
@@ -19,7 +19,7 @@ A simple solution to this could be to initiate a vote among all correct processe
 	\label{consensus}
 \end{figure}
 
-The fundamental problem behind this, is that you cannot rely on the individual processes to be reliable and thus solely store the value. This means, that every process should store this value and should be able to be altered somehow. This boils down to a well-known problem - The Two Generals Problem.
+The fundamental problem behind this is that you cannot rely on the individual processes to be reliable and thus solely store the value. This boils down to a well-known problem - The Two Generals Problem.
 
 % Måske burde the two generals problem komme her?
 
