@@ -1,4 +1,4 @@
-\section{Analysis} % (fold)
+\section{Problem Analysis} % (fold)
 \label{sec:analysis}
 
 In this section we will analyze and describe our approach on implementing Raft with relation to the purpose of this project and with relation to achieve a more fault-tolerant and robust implementation.
@@ -44,7 +44,20 @@ To facilitate writing tests with a BDD-aproach, we used the node lirbaries \href
 
 \lstinputlisting[caption=Example of a JavaScript test with the libraries mocha and chai, language=JavaScript]{code_snippets/chai_mocha_example.js}
 
-
 % subsection our_approach (end)
+
+\subsection{Visualization Tool} % (fold)
+\label{sub:visualization_tool}
+
+An extended requirement specified in section~\ref{sec:requirements} was to build a visualization of the simulation tool. To be able to use the Raft implementation such that the visualization tool does not affect other extensions it is important to build it independent from each other as seen on figure~\ref{fig:algorithm_extension_visualization}. As visualization platform we have chosen to use the command line to visualize the simulation since it is the simplest one.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{figures/implementation_extensions.png}
+  \caption{Illustrating how Raft should be implemented such that it is extendable for uses such as command line tools, browser visualizations or a real usage such as databases or service discovery systems.}
+  \label{fig:algorithm_extension_visualization}
+\end{figure}
+
+% subsection visualization_tool (end)
 
 % section analysis (end)
